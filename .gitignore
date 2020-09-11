@@ -35,3 +35,8 @@ terraform.rc
 
 # Ignore ansible
 .ansible
+vars/default.yml
+inventory
+
+# Ignore ssh keys
+.ssh
