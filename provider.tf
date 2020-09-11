@@ -9,6 +9,7 @@ terraform {
 
 variable "do_token" {}
 variable "ssh_fingerprint" {}
+variable "private_key" {}
 
 provider "digitalocean" {
   token = var.do_token
