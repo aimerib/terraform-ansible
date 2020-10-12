@@ -8,13 +8,6 @@
     - vars/default.yml
 
   tasks:
-    - name: Install Prerequisites
-      apt:
-        name: aptitude
-        update_cache: yes
-        state: latest
-        force_apt_get: yes
-
     # Sudo Group Setup
     - name: Make sure we have a 'wheel' group
       group:
@@ -158,6 +151,21 @@
         update_cache: yes
         name: do-agent
         state: latest
+
+    # - name: create app folder
+    #   file:
+    #     path: /app
+    #     state: directory
+
+    # - name: create docker.env folder
+    #   file:
+    #     path: /app/config
+    #     state: directory
+
+    # - name: create certs folder
+    #   file:
+    #     path: /app/certs
+    #     state: directory
 
     # - name: Copy docker.env file
     #   copy:
