@@ -8,9 +8,7 @@ echo "Starting deployment"
 ./terraform-ansible.sh terraform apply -auto-approve && \
 echo "Waiting for droplet to become active" && \
 sleep 30 && \
-./terraform-ansible.sh ansible-playbook -i inventory playbook.yml
-
-if [[ $? -eq 0 ]]; then
+if ./terraform-ansible.sh ansible-playbook -i inventory.yml playbook.yml; then
   echo "Deployment completed"
   exit 0;
 else

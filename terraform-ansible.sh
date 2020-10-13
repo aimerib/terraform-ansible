@@ -18,35 +18,35 @@
 # your own from the Dockerfile in this repository.
 
 start_terraform(){
-  docker run -it --rm -v `pwd`:/home/sloth \
-  aimeri/terraform-ansible terraform $@
-  if [[ $? -ne 0 ]]; then
-    exit 1;
+  if   docker run -it --rm -v "$(pwd)":/home/sloth \
+  aimeri/terraform-ansible terraform "$@"; then
+    exit 0;
+  else exit 1;
   fi;
 }
 start_ansible(){
-  docker run -it --rm -v `pwd`:/home/sloth \
+  if docker run -it --rm -v "$(pwd | xargs dirname)":/home/sloth \
   -e ANSIBLE_HOST_KEY_CHECKING=False \
-  aimeri/terraform-ansible ansible $@
-  if [[ $? -ne 0 ]]; then
-    exit 1;
+  aimeri/terraform-ansible sh -c "cd terraform; ansible $*"; then
+    exit 0;
+  else exit 1;
   fi;
 }
 start_ansible_playbook(){
-  docker run -it --rm -v `pwd`:/home/sloth \
+  if   docker run -it --rm -v "$(pwd | xargs dirname)":/home/sloth \
   -e ANSIBLE_HOST_KEY_CHECKING=False \
-  aimeri/terraform-ansible ansible-playbook $@
-  if [[ $? -ne 0 ]]; then
-    exit 1;
+  aimeri/terraform-ansible sh -c "cd terraform; ansible-playbook $*"; then
+    exit 0;
+  else exit 1;
   fi;
 }
 
 if [[ "$#" -gt 0 ]]; then
-    case $1 in
-        terraform)        start_terraform ${@:2};;
-        ansible)          start_ansible ${@:2};;
-        ansible-playbook) start_ansible_playbook ${@:2};;
-        *) echo "Unknown parameter passed: $1"; exit 1 ;;
-    esac
-    shift
+  case $1 in
+    terraform)        start_terraform "${@:2}";;
+    ansible)          start_ansible "${@:2}";;
+    ansible-playbook) start_ansible_playbook "${@:2}";;
+    *) echo "Unknown parameter passed: $1"; exit 1 ;;
+  esac
+  shift
 fi

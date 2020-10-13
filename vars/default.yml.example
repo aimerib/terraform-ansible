@@ -2,3 +2,9 @@
 create_user: some_user
 copy_local_key: "{{ lookup('file', '.ssh/id_rsa.pub') }}"
 sys_packages: ["curl", "vim", "git", "ufw"]
+ansible_python_interpreter: "/usr/bin/python3"
+
+# make sure to copy your ~/.ssh/id_rsa.pub form you local computer
+# to the root of the terraform folder. Since ansible will run
+# from inside a docker container, ansible will only have access to
+# files located inside the volume mount.

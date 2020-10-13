@@ -37,6 +37,7 @@ terraform.rc
 .ansible
 vars/default.yml
 inventory
+inventory.yml
 
 # Ignore ssh keys
 .ssh

@@ -152,33 +152,17 @@
         name: do-agent
         state: latest
 
-    # - name: create app folder
-    #   file:
-    #     path: /app
-    #     state: directory
+    - name: create app folder
+      file:
+        path: /app
+        state: directory
+        owner: "{{ create_user }}"
+        group: "{{ create_user }}"
+        mode: "0755"
 
-    # - name: create docker.env folder
-    #   file:
-    #     path: /app/config
-    #     state: directory
-
-    # - name: create certs folder
-    #   file:
-    #     path: /app/certs
-    #     state: directory
-
-    # - name: Copy docker.env file
-    #   copy:
-    #     src: config/docker.env
-    #     dest: /app/config/docker.env
-    #     owner: "{{ create_user }}"
-    #     group: "{{ create_user }}"
-    #     mode: "0644"
-
-    # - name: Copy Cloudflare certificates
-    #   copy:
-    #     src: certs/
-    #     dest: /app/certs/
-    #     owner: "{{ create_user }}"
-    #     group: "{{ create_user }}"
-    #     mode: "0644"
+    - name: Copy app
+      synchronize:
+        src: "{{ playbook_dir | dirname }}/"
+        dest: /app
+        rsync_opts:
+          - "--exclude=terraform"

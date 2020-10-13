@@ -10,7 +10,7 @@ ENV USER sloth
 ENV HOME /home/$USER
 
 # install sudo, terraform, and ansible as root
-RUN apk add --update terraform ansible openssh --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+RUN apk add --update terraform ansible openssh rsync --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 # add new user and set id to match host computer's
 RUN adduser -u 1000 -D $USER $USER -h $HOME \
